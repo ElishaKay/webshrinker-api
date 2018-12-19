@@ -19,7 +19,7 @@ access_key = "123xz"
 secret_key = "123xz"
 
 url = b"http://www.sbwire.com/"
-domain_list = ['google.com','wikipedia.org','adobe.com']
+domain_list = ['google.com','youtube.com','blogger.com','wordpress.org','microsoft.com','linkedin.com','wikipedia.org','pinterest.com','apple.com','vimeo.com','goo.gl','amazon.com','bit.ly','adobe.com','flickr.com','google.de','weebly.com','yahoo.com','t.co','cloudflare.com','baidu.com','ec.europa.eu','nytimes.com','w3.org','yandex.ru','bbc.co.uk','godaddy.com','soundcloud.com','github.com','creativecommons.org','mozilla.org','theguardian.com','cnn.com','gravatar.com','feedburner.com','google.co.jp','issuu.com','tinyurl.com','amazonaws.com','forbes.com','sina.com.cn','opera.com','archive.org','googleusercontent.com','google.co.uk','wikimedia.org','etsy.com','jimdo.com','huffingtonpost.com']
 
 def write_to_file():
 	request_url_list = []
