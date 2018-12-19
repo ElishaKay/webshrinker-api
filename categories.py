@@ -19,9 +19,15 @@ access_key = "123xz"
 secret_key = "123xz"
 
 url = b"http://www.sbwire.com/"
+domain_list = ['google.com','wikipedia.org','adobe.com']
 
 def write_to_file():
+	request_url_list = []
+	for i in range(len(domain_list)):
+		new_url=webshrinker_categories_v3(access_key, secret_key, domain_list[i].encode())
+		print('new_url:', new_url)
+		request_url_list.append(new_url)
 	file = open("testfile.txt","w") 
-	file.write(webshrinker_categories_v3(access_key, secret_key, url))
+	file.write('\n'.join(request_url_list))
 
 write_to_file()
