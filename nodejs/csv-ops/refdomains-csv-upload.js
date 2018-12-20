@@ -5,13 +5,13 @@ let mysql = require('mysql');
 let dbconfig = require('../config/database');
 let connection = mysql.createConnection(dbconfig.connection);
 
-var stream = fs.createReadStream("./skylinyl.csv");
+var stream = fs.createReadStream("./kickstarter-refdomains.csv");
  
 var csvStream = csv()
     .on("data", function(data){
          console.log(data);
-         let profile_id = data[1];
-         let theFirstQuery = `SELECT ks_user_id FROM ks_user WHERE ks_user_profile_url LIKE concat('%','${profile_id}')`;
+         let url = data[3];
+         let theFirstQuery = `SELECT domain_id FROM domain WHERE url = '${url}'`;
          
          // let theQuery = `select * from ks_campaign`;
          console.log('theQuery: ', theFirstQuery);
@@ -22,19 +22,29 @@ var csvStream = csv()
     					// let theSecondQuery = `SELECT ks_user_id FROM ks_user WHERE ks_user_name LIKE concat('%','${profile_id}','%')`; 
     				} else {
     					console.log(result);
-    					let user_id = result[0].ks_user_id;
-    					let user_email = data[3];
-    					let user_country = data[4];
-    					let theUpdateQuery = `UPDATE ks_user
-												SET ks_user_email = '${user_email}', ks_user_country = '${user_country}' 
-												WHERE ks_user_id='${user_id}'`;
 
-						console.log('theUpdateQuery: ',theUpdateQuery);
+                        let domainRecords = result;
+                        for (let i = 0; i < domainRecords.length; i++) { 
+        					let domain_id = domainRecords[i].domain_id;
 
-						connection.query(theUpdateQuery, function (err, result, fields) {
-						    if (err) throw err;
-						    console.log(result);
-						});
+
+        					let domain_trust_score = data[2];
+        					let number_of_backlinks = data[4];
+                            let ip_address = data[5];
+                            let country = data[6];
+        					let theUpdateQuery = `UPDATE domain
+    												SET 
+                                                        domain_trust_score = '${domain_trust_score}', number_of_backlinks = '${number_of_backlinks}',
+                                                        country = '${country}', ip_address = '${ip_address}'
+    												WHERE domain_id='${domain_id}'`;
+
+    						console.log('theUpdateQuery: ',theUpdateQuery);
+
+    						connection.query(theUpdateQuery, function (err, result, fields) {
+    						    if (err) throw err;
+    						    console.log(result);
+    						});
+                        }
     				}
 			});
 	})
